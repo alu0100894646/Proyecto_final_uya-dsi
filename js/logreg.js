@@ -11,6 +11,30 @@ var config = {
 firebase.initializeApp(config);
 }());
 
+function log_in(){
+    
+    var email = document.getElementById("email").value;
+    var pass = document.getElementById("password").value;
+    
+    firebase.auth().signInWithEmailAndPassword(email,pass).catch(function(error){
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        
+        if(errorCode == "auth/invalid-email")
+            alert("El email"+email+"No es válido");
+        else if(errorCode == "auth/user-disabled");
+            alert("El email"+email+"esta desabilitado");
+        else if(errorCode == "auth/user-not-found");
+            alert("No existe un usuario con ese email");
+        else if(errorCode == "auth/wrong-password");
+            alert("La constraseña proporcionada no es la correcta");
+        else
+            alert(errorMessage);
+        
+        console.log(error);
+    });
+}
+
 function validar_formulario(){
 
   var nombre = document.getElementById("first_name").value;
