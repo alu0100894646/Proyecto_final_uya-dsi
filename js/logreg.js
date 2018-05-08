@@ -1,3 +1,14 @@
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyCrRr1EEQNOXhlTNd-3JWd3pCDWS8tTyhU",
+  authDomain: "dsi-pfinal.firebaseapp.com",
+  databaseURL: "https://dsi-pfinal.firebaseio.com",
+  projectId: "dsi-pfinal",
+  storageBucket: "dsi-pfinal.appspot.com",
+  messagingSenderId: "223396973865"
+};
+firebase.initializeApp(config);
+
 function validar_formulario(){
 
   var nombre = document.getElementById("first_name").value;
@@ -19,17 +30,6 @@ function validar_formulario(){
    else if (!v_email.test(email)){
     alert("La dirección de e_mail " + email + " no es válida");
   }
-
-  // Initialize Firebase
-  var config = {
-	apiKey: "AIzaSyCrRr1EEQNOXhlTNd-3JWd3pCDWS8tTyhU",
-	authDomain: "dsi-pfinal.firebaseapp.com",
-	databaseURL: "https://dsi-pfinal.firebaseio.com",
-	projectId: "dsi-pfinal",
-	storageBucket: "dsi-pfinal.appspot.com",
-	messagingSenderId: "223396973865"
-  };
-  firebase.initializeApp(config);
 
   firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
       //handle erros here
