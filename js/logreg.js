@@ -22,11 +22,11 @@ function log_in(){
         
         if(errorCode == "auth/invalid-email")
             alert("El email"+email+"No es válido");
-        else if(errorCode == "auth/user-disabled");
+        else if(errorCode == "auth/user-disabled")
             alert("El email"+email+"esta desabilitado");
-        else if(errorCode == "auth/user-not-found");
+        else if(errorCode == "auth/user-not-found")
             alert("No existe un usuario con ese email");
-        else if(errorCode == "auth/wrong-password");
+        else if(errorCode == "auth/wrong-password")
             alert("La constraseña proporcionada no es la correcta");
         else
             alert(errorMessage);
