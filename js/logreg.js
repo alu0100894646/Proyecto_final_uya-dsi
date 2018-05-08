@@ -29,7 +29,7 @@ function log_in(){
         else if(errorCode == "auth/wrong-password")
             alert("La constraseña proporcionada no es la correcta");
         else
-            alert(errorMessage);
+            alert("NAISUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         
         console.log(error);
     });
