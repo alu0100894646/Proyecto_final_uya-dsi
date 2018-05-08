@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>TempUX</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
+  <link href="css/logreg.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+</head>
+
+
+<body>
+<div class="container white z-depth-2">
+	<ul class="tabs teal">
+		<li class="tab col s3"><a class="white-text active" href="#login" id="login_li">Login</a></li>
+		<li class="tab col s3"><a class="white-text" href="#register" id="register_li">Registrarse</a></li>
+	</ul>
+	<div id="login" class="col s12">
+		<form class="col s12">
+			<div class="form-container">
+				<h3 class="teal-text">Bienvenido</h3>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email" type="email" class="validate">
+						<label for="email">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password" type="password" class="validate">
+						<label for="password">Contraseña</label>
+					</div>
+				</div>
+				<br>
+				<center>
+					<button class="btn waves-effect waves-light teal" type="submit" name="action">Entrar</button>
+					<br>
+					<br>
+					<a href="">Contraseña olvidada?</a>
+				</center>
+			</div>
+		</form>
+	</div>
+	<div id="register" class="col s12">
+		<form class="col s12">
+			<div class="form-container">
+				<h3 class="teal-text">Welcome</h3>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="first_name" type="text" class="validate">
+						<label for="last_name">Nombre</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="last_name" type="text" class="validate">
+						<label for="last_name">Apellidos</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email_reg" type="email" class="validate">
+						<label for="email">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email-confirm" type="email" class="validate">
+						<label for="email-confirm">Confirmar Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password_reg" type="password" class="validate">
+						<label for="password">Contraseña</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password-confirm" type="password" class="validate">
+						<label for="password-confirm">Confirmar Contraseña</label>
+					</div>
+				</div>
+				<center>
+					<button class="btn waves-effect waves-light teal" type="submit" name="action" onclick="validar_formulario()">Registrarse</button>
+				</center>
+			</div>
+		</form>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'></script>
+<script src="js/logreg.js"></script>
+
+</body>
+</html>
