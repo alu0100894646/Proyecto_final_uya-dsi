@@ -29,8 +29,8 @@ function log_in(){
         else if(errorCode == "auth/wrong-password")
             alert("La constraseña proporcionada no es la correcta");
         else
-            //console.log("NAISUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            console.log(error);
+            console.log("NAISUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        console.log(error + " Pene");
     });
     firebase.auth().onAuthStateChanged(user => {
       if(user)
@@ -77,4 +77,16 @@ function validar_formulario(){
       else
         alert(errorMessage);
   });
+
+  firebase.auth().onAuthStateChanged(user => {
+    if(user)
+    {
+      window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+    }
+    else
+    {
+      console.log('No te has logeado.');
+    }
+  });
+
 };
