@@ -29,8 +29,8 @@ function log_in(){
         else if(errorCode == "auth/wrong-password")
             alert("La constraseña proporcionada no es la correcta");
         else
-            console.log("NAISUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        console.log(error + " Pene");
+            console.log("Funciona");
+        console.log(error + " hola");
     });
     firebase.auth().onAuthStateChanged(user => {
       if(user)
