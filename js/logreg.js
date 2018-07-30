@@ -75,7 +75,8 @@ function validar_formulario(){
       else if(errorCode == "auth/email-already-in-use")
         alert("El correo ya está en uso.");
       else
-        alert(errorMessage);
+          alert(errorMessage);
+      console.log('Hola estoy creando un usuario');
   });
 
   firebase.auth().onAuthStateChanged(user => {
