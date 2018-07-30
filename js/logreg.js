@@ -80,14 +80,14 @@ function validar_formulario(){
   });
 
   firebase.auth().onAuthStateChanged(user => {
-    if(user)
-    {
+    //if(user)
+    
       window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
-    }
-    else
-    {
+    
+    //else
+    //{
       console.log('No te has logeado.');
-    }
+    //}
   });
 
 };
