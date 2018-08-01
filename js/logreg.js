@@ -79,10 +79,11 @@ function validar_formulario(){
       console.log('Hola estoy creando un usuario');
   });
 
-  firebase.auth().onAuthStateChanged(user => {
-    if(user)
-      window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
-    
+  firebase.auth().onAuthStateChanged(email => {
+  if (email)
+  {
+    window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+  }
     else
     {
       console.log('No te has logeado.');
