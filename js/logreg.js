@@ -40,6 +40,7 @@ function log_in(){
       else
       {
         console.log('No te has logeado.login');
+    }
     });
 }
 
