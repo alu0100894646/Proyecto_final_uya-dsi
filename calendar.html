@@ -1,8 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel='stylesheet' href='fullcalendar-3.9.0/fullcalendar.css' />
+  <script src='lib/jquery-3.3.1.min.js'></script>
+  <script src='lib/moment.min.js'></script>
+  <script src='fullcalendar-3.9.0/fullcalendar.js'></script>
+ 
   <title>TempUX</title>
 
   <!-- CSS  -->
@@ -14,7 +19,8 @@
 <body>
 
   <!-- <h3>Estamos trabajando en ello</h3> -->
-  <div class="wrapper">
+    <div id="calendar"></div>
+ <!--  <div class="wrapper">
 
   <div id="calendar">
     <div class="header">
@@ -30,7 +36,7 @@
     <form>
       <div class="form-name">
         <input type="text" name="name" id="name">
-        <label for="name">Your name</label>
+        <label for="name">Nombre</label>
       </div>
 
       <div class="form-name">
@@ -50,6 +56,7 @@
 
   </div>
 
+    
   <div class='timepicker'>
     <div class="owl">
       <div>06:00</div>
@@ -73,13 +80,14 @@
   </div>
 
 </div>
+     -->
+   
 
-
-
+    
   <!-- scripts -->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
   <script src="js/materialize.js"></script>
   <script src="js/calendar.js"></script>
-
+  
 </body>
 </html>

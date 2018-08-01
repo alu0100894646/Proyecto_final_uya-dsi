@@ -1,4 +1,17 @@
-var time;
+$(function () {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+
+        defaultView: 'month'
+        // put your options and callbacks here
+
+    })
+
+});
+
+/*var time;
 var day;
 var month;
 var year;
@@ -174,3 +187,5 @@ $(document).on('click', '.ui-datepicker-prev', function(){
 $(window).on('resize', function(){
   $(".timepicker").css('top', $(".timepicker-cf").offset().top - 2);
 });
+
+*/
