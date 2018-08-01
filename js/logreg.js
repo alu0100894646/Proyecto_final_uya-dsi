@@ -39,7 +39,7 @@ function log_in(){
       }
       else
       {
-        console.log('No te has logeado.');
+        console.log('No te has logeado.login');
       }
     });
 }
@@ -86,7 +86,7 @@ function validar_formulario(){
   }
     else
     {
-      console.log('No te has logeado.');
+      console.log('No te has logeado.validarusuario');
     }
   });
 
