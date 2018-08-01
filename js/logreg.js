@@ -1,5 +1,5 @@
 // Initialize Firebase
-(function(){
+/*(function(){
 var config = {
   apiKey: "AIzaSyCrRr1EEQNOXhlTNd-3JWd3pCDWS8tTyhU",
   authDomain: "dsi-pfinal.firebaseapp.com",
@@ -9,7 +9,7 @@ var config = {
   messagingSenderId: "223396973865"
 };
 firebase.initializeApp(config);
-}());
+}());*/
 
 function log_in(){
 
