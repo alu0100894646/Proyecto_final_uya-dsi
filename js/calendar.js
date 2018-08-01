@@ -3,9 +3,29 @@ $(function () {
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
+        selectable: true,
+        dayClick: function(date, jsEvent, view) {
+            var prueba = prompt('Introduza el evento');
+                if(prueba != null)
+                    $('#calendar').fullCalendar('renderEvent', {
+               
+                        title: prueba, 
+                        start: date,
+                        allDay: true
+                    }, true);
+          
+            //alert('Clicked on: ' + date.format());
 
+          
+
+            // change the day's background color just for fun
+            $(this).css('background-color', 'light blue');
+
+    },
+        
         defaultView: 'month'
         // put your options and callbacks here
+        
 
     })
 
