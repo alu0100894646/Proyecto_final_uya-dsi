@@ -32,7 +32,7 @@ function log_in(){
             console.log("Funciona");
         console.log(error + " hola");
     });
-    firebase.auth().onAuthStateChanged(email => {
+    firebase.auth().onAuthStateChanged(function(email) {
       if(email)
       {
         window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
@@ -40,7 +40,6 @@ function log_in(){
       else
       {
         console.log('No te has logeado.login');
-      }
     });
 }
 
