@@ -27,7 +27,7 @@ function log_in(){
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
 
-    firebase.auth().signInWithEmailAndPassword(email,pass).catch(function(error){
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error){
         var errorCode = error.code;
         var errorMessage = error.message;
 
@@ -40,8 +40,8 @@ function log_in(){
         else if(errorCode == "auth/wrong-password")
             alert("La constraseña proporcionada no es la correcta");
         else
-            console.log("Funciona");
-        console.log(error + " hola");
+            alert("Funciona");
+        alert(error + " hola");
     });
     // firebase.auth().onAuthStateChanged(function(email) {
     //   if(email)
@@ -87,7 +87,7 @@ function validar_formulario(){
         alert("El correo ya está en uso.");
       else
           alert(errorMessage);
-      console.log('Hola estoy creando un usuario');
+      alert('Hola estoy creando un usuario');
   });
 
   // firebase.auth().onAuthStateChanged(email => {
