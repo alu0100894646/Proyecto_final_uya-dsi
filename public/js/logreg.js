@@ -11,12 +11,25 @@ var config = {
 firebase.initializeApp(config);
 }());*/
 
+var rootRef = firebase.database().ref();
+
+rootRef.auth().onAuthStateChanged(function(user) {
+  if(user)
+  {
+    window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+  }
+  else
+  {
+    console.log('No te has logeado.login');
+}
+});
+
 function log_in(){
 
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
 
-    firebase.auth().signInWithEmailAndPassword(email,pass).catch(function(error){
+    rootRef.auth().signInWithEmailAndPassword(email, pass).catch(function(error){
         var errorCode = error.code;
         var errorMessage = error.message;
 
@@ -29,19 +42,19 @@ function log_in(){
         else if(errorCode == "auth/wrong-password")
             alert("La constraseña proporcionada no es la correcta");
         else
-            console.log("Funciona");
-        console.log(error + " hola");
+            alert("Funciona");
+        alert(error + " hola");
     });
-    firebase.auth().onAuthStateChanged(function(email) {
-      if(email)
-      {
-        window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
-      }
-      else
-      {
-        console.log('No te has logeado.login');
-    }
-    });
+    // firebase.auth().onAuthStateChanged(function(email) {
+    //   if(email)
+    //   {
+    //     window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+    //   }
+    //   else
+    //   {
+    //     console.log('No te has logeado.login');
+    // }
+    // });
 }
 
 function validar_formulario(){
@@ -66,7 +79,7 @@ function validar_formulario(){
     alert("La dirección de e_mail " + email + " no es válida");
   }
 
-  firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
+  rootRef.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
       //handle erros here
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -76,18 +89,18 @@ function validar_formulario(){
         alert("El correo ya está en uso.");
       else
           alert(errorMessage);
-      console.log('Hola estoy creando un usuario');
+      alert('Hola estoy creando un usuario');
   });
 
-  firebase.auth().onAuthStateChanged(email => {
-  if (email)
-  {
-    window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
-  }
-    else
-    {
-      console.log('No te has logeado.validarusuario');
-    }
-  });
+  // firebase.auth().onAuthStateChanged(email => {
+  // if (email)
+  // {
+  //   window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+  // }
+  //   else
+  //   {
+  //     console.log('No te has logeado.validarusuario');
+  //   }
+  // });
 
 };
