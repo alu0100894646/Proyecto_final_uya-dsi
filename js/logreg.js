@@ -11,6 +11,17 @@ var config = {
 firebase.initializeApp(config);
 }());*/
 
+firebase.auth().onAuthStateChanged(function(user) {
+  if(user)
+  {
+    window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+  }
+  else
+  {
+    console.log('No te has logeado.login');
+}
+});
+
 function log_in(){
 
     var email = document.getElementById("email").value;
@@ -32,16 +43,16 @@ function log_in(){
             console.log("Funciona");
         console.log(error + " hola");
     });
-    firebase.auth().onAuthStateChanged(function(email) {
-      if(email)
-      {
-        window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
-      }
-      else
-      {
-        console.log('No te has logeado.login');
-    }
-    });
+    // firebase.auth().onAuthStateChanged(function(email) {
+    //   if(email)
+    //   {
+    //     window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+    //   }
+    //   else
+    //   {
+    //     console.log('No te has logeado.login');
+    // }
+    // });
 }
 
 function validar_formulario(){
@@ -79,15 +90,15 @@ function validar_formulario(){
       console.log('Hola estoy creando un usuario');
   });
 
-  firebase.auth().onAuthStateChanged(email => {
-  if (email)
-  {
-    window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
-  }
-    else
-    {
-      console.log('No te has logeado.validarusuario');
-    }
-  });
+  // firebase.auth().onAuthStateChanged(email => {
+  // if (email)
+  // {
+  //   window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+  // }
+  //   else
+  //   {
+  //     console.log('No te has logeado.validarusuario');
+  //   }
+  // });
 
 };
