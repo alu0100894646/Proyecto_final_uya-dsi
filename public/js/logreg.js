@@ -11,12 +11,12 @@ var config = {
 firebase.initializeApp(config);
 }());*/
 
-var rootRef = firebase.database().ref();
+// var rootRef = firebase.database().ref();
 
-rootRef.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function(user) {
   if(user)
   {
-    window.location = 'calendar.html'; //After successful login, user will be redirected to home.html
+    window.location = 'calendar.html'; //After successful login, user will be redirected to calendar.html
   }
   else
   {
@@ -29,7 +29,7 @@ function log_in(){
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
 
-    rootRef.auth().signInWithEmailAndPassword(email, pass).catch(function(error){
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error){
         var errorCode = error.code;
         var errorMessage = error.message;
 
@@ -79,7 +79,7 @@ function validar_formulario(){
     alert("La dirección de e_mail " + email + " no es válida");
   }
 
-  rootRef.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
+  firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
       //handle erros here
       var errorCode = error.code;
       var errorMessage = error.message;
