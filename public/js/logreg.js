@@ -24,10 +24,16 @@ firebase.auth().onAuthStateChanged(function(user) {
 }
 });
 
+
+
 function log_in(){
 
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
+
+  
+
+
 
     firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error){
         var errorCode = error.code;
@@ -65,6 +71,8 @@ function validar_formulario(){
   var email = document.getElementById("email_reg").value;
   var pass = document.getElementById("password_reg").value;
 
+  var connection = new WebSocket('ws://localhost:1337');
+
   if(nombre === ""){
     alert("Error al escribir el nombre");
     return false;
@@ -77,7 +85,18 @@ function validar_formulario(){
 
    else if (!v_email.test(email)){
     alert("La dirección de e_mail " + email + " no es válida");
-  }
+   }
+
+  connection.onopen = function () {
+      // connection is opened and ready to use
+      connection.send(email);
+  };
+
+  connection.onerror = function (error) {
+      // an error occurred when sending/receiving data
+
+  };
+  
 
   firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
       //handle erros here
@@ -102,5 +121,5 @@ function validar_formulario(){
   //     console.log('No te has logeado.validarusuario');
   //   }
   // });
-
+  
 };
