@@ -29,11 +29,17 @@ wsServer.on('request', function (request) {
         console.log('he recibido un mensaje');
 
         var userData = message.utf8Data;
-        console.log(userData);
+        var userDataPar = JSON.parse(userData);
 
-        // var userData = JSON.parse(message.data);
-        // var nombre_usuario = userData[0].nombre_u;
-        // console.log(nombre_usuario);
+        var nombre_usuario = userDataPar.nombre_u;
+        console.log(nombre_usuario);
+        var apellidos_usuario = userDataPar.apellidos_u;
+        console.log(apellidos_usuario);
+        var email_usuario = userDataPar.email_u;
+        console.log(email_usuario);
+        var pass_usuario = userDataPar.pass_u;
+        console.log(pass_usuario);
+
 
 //         var userdata = JSON.parse(data);
 // var user1_name = userdata[0].name;
