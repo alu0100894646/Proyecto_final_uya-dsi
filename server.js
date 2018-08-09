@@ -28,12 +28,17 @@ wsServer.on('request', function (request) {
         console.log(message);
         console.log('he recibido un mensaje');
 
-        var userData = JSON.parse(message.responseText);
-        var nombre_usuario = userData[0].nombre_u;
+        var userData = message.utf8Data;
+        var userDataPar = JSON.parse(userData);
 
-
-
-
+        var nombre_usuario = userDataPar.nombre_u;
+        console.log(nombre_usuario);
+        var apellidos_usuario = userDataPar.apellidos_u;
+        console.log(apellidos_usuario);
+        var email_usuario = userDataPar.email_u;
+        console.log(email_usuario);
+        var pass_usuario = userDataPar.pass_u;
+        console.log(pass_usuario);
 
 
         // firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
