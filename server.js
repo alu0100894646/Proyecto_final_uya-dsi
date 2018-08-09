@@ -28,8 +28,19 @@ wsServer.on('request', function (request) {
         console.log(message);
         console.log('he recibido un mensaje');
 
-        var userData = JSON.parse(message.responseText);
-        var nombre_usuario = userData[0].nombre_u;
+        var userData = message.utf8Data;
+        console.log(userData);
+
+        // var userData = JSON.parse(message.data);
+        // var nombre_usuario = userData[0].nombre_u;
+        // console.log(nombre_usuario);
+
+//         var userdata = JSON.parse(data);
+// var user1_name = userdata[0].name;
+// var user1_age = userdata[0].age;
+// var user2_name = userdata[1].name;
+// var user2_age = userdata[1].age;
+// data = '[{"name" : "John Doe", "age" : "25"},{"name" : "Jane Doe", "age" : "20"}]';
 
 
 
