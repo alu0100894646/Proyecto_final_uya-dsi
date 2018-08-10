@@ -105,18 +105,20 @@ function validar_formulario(){
   };
 
 
-  firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
-      //handle erros here
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if(errorCode == "auth/weak-password")
-        alert("La contraseña es débil.");
-      else if(errorCode == "auth/email-already-in-use")
-        alert("El correo ya está en uso.");
-      else
-          alert(errorMessage);
-      alert('Hola estoy creando un usuario');
-  });
+/********************QUITAMOS EL LOGIN DEL CLIENTE****************************************/
+
+  // firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
+  //     //handle erros here
+  //     var errorCode = error.code;
+  //     var errorMessage = error.message;
+  //     if(errorCode == "auth/weak-password")
+  //       alert("La contraseña es débil.");
+  //     else if(errorCode == "auth/email-already-in-use")
+  //       alert("El correo ya está en uso.");
+  //     else
+  //         alert(errorMessage);
+  //     alert('Hola estoy creando un usuario');
+  // });
 
   // firebase.auth().onAuthStateChanged(email => {
   // if (email)

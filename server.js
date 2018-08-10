@@ -39,6 +39,32 @@ wsServer.on('request', function (request) {
         console.log(message);
         console.log('he recibido un mensaje');
 
+        var userData = message.utf8Data;
+        var userDataPar = JSON.parse(userData);
+
+        var nombre_usuario = userDataPar.nombre_u;
+        console.log(nombre_usuario);
+        var apellidos_usuario = userDataPar.apellidos_u;
+        console.log(apellidos_usuario);
+        var email_usuario = userDataPar.email_u;
+        console.log(email_usuario);
+        var pass_usuario = userDataPar.pass_u;
+        console.log(pass_usuario);
+
+
+        // firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
+        //     //handle erros here
+        //     var errorCode = error.code;
+        //     var errorMessage = error.message;
+        //     if(errorCode == "auth/weak-password")
+        //       alert("La contraseña es débil.");
+        //     else if(errorCode == "auth/email-already-in-use")
+        //       alert("El correo ya está en uso.");
+        //     else
+        //         alert(errorMessage);
+        //     alert('Hola estoy creando un usuario');
+        // });
+
     });
 
     connection.on('close', function (connection) {
