@@ -72,19 +72,25 @@ wsServer.on('request', function (request) {
         console.log(pass_usuario);
 
 
-        // firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error){
-        //     //handle erros here
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
-        //     if(errorCode == "auth/weak-password")
-        //       alert("La contraseña es débil.");
-        //     else if(errorCode == "auth/email-already-in-use")
-        //       alert("El correo ya está en uso.");
-        //     else
-        //         alert(errorMessage);
-        //     alert('Hola estoy creando un usuario');
-        // });
-
+        defaultAuth.createUser({
+          uid: email_usuario,
+          email: email_usuario,
+          password: pass_usuario
+        })
+        .then(function(userRecord) {
+        // See the UserRecord reference doc for the contents of userRecord.
+          console.log("Successfully created new user:", userRecord.uid);
+        })
+        .catch(function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if(errorCode == "auth/weak-password")
+            alert("La contraseña es débil.");
+          else if(errorCode == "auth/email-already-in-use")
+            alert("El correo ya está en uso.");
+          else
+            console.log("Error creating new user:", error);
+        });
     });
 
     connection.on('close', function (connection) {
