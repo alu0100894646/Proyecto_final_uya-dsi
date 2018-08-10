@@ -24,6 +24,17 @@ wsServer.on('request', function (request) {
     // This is the most important callback for us, we'll handle
     // all messages from users here.
     connection.on('message', function (message) {
+        /*nombre_u : nombre,
+          apellidos_u : apellidos,
+          email_u : email,
+          pass_u : pass*/
+
+        //message.info_cliente.nombre_u
+        console.log(message.nombre_u);
+        //var nombre = 
+
+
+
 
         console.log(message);
         console.log('he recibido un mensaje');

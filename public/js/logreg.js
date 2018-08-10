@@ -96,7 +96,7 @@ function validar_formulario(){
 
   connection.onopen = function () {
       // connection is opened and ready to use
-      connection.send(JSON.stringify(info_cliente));
+      connection.send(/*JSON.stringify*/(info_cliente));
   };
 
   connection.onerror = function (error) {
