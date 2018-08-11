@@ -134,20 +134,22 @@ wsServer.on('request', function (request) {
                 var contraseña = snapshot.val().contraseña;
                 console.log(correo_electronico);
                 console.log(contraseña);
-
+               
                 if (correo_electronico === email_usuario_l)
-                    if (contraseña === pass_usuario_l)
-                        admin.auth().createCustomToken({
-                            uid: email_usuario_l,
-                            pass: pass_usuario_l
-                        })
-                        .then(function (customToken) {
+                    if (contraseña === pass_usuario_l) {
+
+                        
+                        admin.auth().createCustomToken(email_usuario_l).then(function (customToken) {
                             // Send token back to client
+                           
+                            connection.send(customToken);
+                           
                         })
                         .catch(function (error) {
                             console.log("Error creating custom token:", error);
                         });
-            }, function (errorObject) {
+                    }
+                    }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });
 
@@ -199,6 +201,8 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
+
+
 
 app.listen(port, (err) => {
     if (err) {
