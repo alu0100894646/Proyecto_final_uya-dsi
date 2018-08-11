@@ -90,6 +90,7 @@ wsServer.on('request', function (request) {
         .then(function (userRecord) {
             // See the UserRecord reference doc for the contents of userRecord.
             console.log("Successfully created new user:", userRecord.uid);
+           
         })
         .catch(function (error) {
             var errorCode = error.code;
@@ -103,17 +104,19 @@ wsServer.on('request', function (request) {
         });
 
             var db = admin.database();
-            var ref = db.ref("server/saving-data/fireblog");
-
-            var usersRef = ref.child("users");
-            usersRef.push({
-
+           // var ref = db.ref("server/saving-data/fireblog");
+            
+            var sin = quitarelpunto(email_usuario);
+            //var usersRef = ref.child("users");
+            console.log(" sin: " + sin);
+            db.ref('server/users/' + sin).set({
                 Apellidos: apellidos_usuario,
                 Correo_electronico: email_usuario,
                 Nombre: nombre_usuario,
                 contraseña: pass_usuario
-
             });
+           
+            TokenPersonalizado(email_usuario, connection);
         }
 
         else if (tipo_d === 'login') {
@@ -125,11 +128,11 @@ wsServer.on('request', function (request) {
 
 
             var db = admin.database();
-            var ref = db.ref("server/saving-data/fireblog/users");
+            var ref = db.ref("server/users");
 
             // Attach an asynchronous callback to read the data at our posts reference
             ref.orderByChild("Correo_electronico").on("child_added", function (snapshot) {
-
+           
                 var correo_electronico = snapshot.val().Correo_electronico;
                 var contraseña = snapshot.val().contraseña;
                 console.log(correo_electronico);
@@ -138,20 +141,13 @@ wsServer.on('request', function (request) {
                 if (correo_electronico === email_usuario_l)
                     if (contraseña === pass_usuario_l) {
 
+                        TokenPersonalizado(email_usuario_l, connection);
                         
-                        admin.auth().createCustomToken(email_usuario_l).then(function (customToken) {
-                            // Send token back to client
-                           
-                            connection.send(customToken);
-                           
-                        })
-                        .catch(function (error) {
-                            console.log("Error creating custom token:", error);
-                        });
                     }
                     }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });
+
 
 
             /*admin.auth().createCustomToken({
@@ -211,3 +207,23 @@ app.listen(port, (err) => {
     console.log(__dirname);
     console.log('Server escuchando en ' + port);
 })
+
+function TokenPersonalizado(uid, connection) {
+
+    admin.auth().createCustomToken(uid).then(function (customToken) {
+        // Send token back to client
+
+        connection.send(customToken);
+
+    })
+.catch(function (error) {
+    console.log("Error creating custom token:", error);
+});
+}
+
+function quitarelpunto(cadena) {
+
+    
+    return cadena.replace(/\./g,'');
+    
+}

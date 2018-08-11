@@ -118,5 +118,19 @@ function validar_formulario() {
 
     };
 
-   
+    connection.onmessage = function (token) {
+        var new_token = token.data;
+
+        console.log("He llegado");
+
+        firebase.auth().signInWithCustomToken(new_token).catch(function (error) {
+            // Handle Errors here.
+
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+        });
+    }
+
+  
 }
