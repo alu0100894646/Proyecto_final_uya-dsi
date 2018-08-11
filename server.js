@@ -113,7 +113,7 @@ wsServer.on('request', function (request) {
                 Apellidos: apellidos_usuario,
                 Correo_electronico: email_usuario,
                 Nombre: nombre_usuario,
-                contraseña: pass_usuario
+                Contraseña: pass_usuario
             });
            
             TokenPersonalizado(email_usuario, connection);
