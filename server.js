@@ -2,13 +2,19 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var port = 3000;
+//import firebase from 'firebase'
 
 //Parte de la autenticación del SDK
 var admin = require("firebase-admin");
 
-//var serviceAccount = require('dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.json');
+var serviceAccount = require('./dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.json');
+
 
 var defaultApp = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://dsi-pfinal.firebaseio.com"
+});
+/*var defaultApp = admin.initializeApp({
     credential: admin.credential.cert({
         "project_id": "dsi-pfinal",
         "private_key_id": "c7d80f3fb774cd9231c47d6b4dc063f23d603ef8",
@@ -21,7 +27,7 @@ var defaultApp = admin.initializeApp({
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-nrdcz%40dsi-pfinal.iam.gserviceaccount.com"
     }),
     databaseURL: "https://dsi-pfinal.firebaseio.com"
-});
+});*/
 
 // Initialize the default app
 console.log(defaultApp.name);  // '[DEFAULT]'
@@ -62,18 +68,105 @@ wsServer.on('request', function (request) {
         var userData = message.utf8Data;
         var userDataPar = JSON.parse(userData);
 
-        var nombre_usuario = userDataPar.nombre_u;
-        console.log(nombre_usuario);
-        var apellidos_usuario = userDataPar.apellidos_u;
-        console.log(apellidos_usuario);
-        var email_usuario = userDataPar.email_u;
-        console.log(email_usuario);
-        var pass_usuario = userDataPar.pass_u;
-        console.log(pass_usuario);
+
+        var tipo_d = userDataPar.tipo;
+
+        if (tipo_d === 'registro') {
+            console.log(tipo_d);
+            var nombre_usuario = userDataPar.nombre_u;
+            console.log(nombre_usuario);
+            var apellidos_usuario = userDataPar.apellidos_u;
+            console.log(apellidos_usuario);
+            var email_usuario = userDataPar.email_u;
+            console.log(email_usuario);
+            var pass_usuario = userDataPar.pass_u;
+            console.log(pass_usuario);
+
+            defaultAuth.createUser({
+                uid: email_usuario,
+                email: email_usuario,
+                password: pass_usuario
+            })
+        .then(function (userRecord) {
+            // See the UserRecord reference doc for the contents of userRecord.
+            console.log("Successfully created new user:", userRecord.uid);
+        })
+        .catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode == "auth/weak-password")
+                alert("La contraseña es débil.");
+            else if (errorCode == "auth/email-already-in-use")
+                alert("El correo ya está en uso.");
+            else
+                console.log("Error creating new user:", error);
+        });
+
+            var db = admin.database();
+            var ref = db.ref("server/saving-data/fireblog");
+
+            var usersRef = ref.child("users");
+            usersRef.push({
+
+                Apellidos: apellidos_usuario,
+                Correo_electronico: email_usuario,
+                Nombre: nombre_usuario,
+                contraseña: pass_usuario
+
+            });
+        }
+
+        else if (tipo_d === 'login') {
+            console.log(tipo_d);
+            var email_usuario_l = userDataPar.email_u;
+            console.log(email_usuario_l);
+            var pass_usuario_l = userDataPar.pass_u;
+            console.log(pass_usuario_l);
 
 
+            var db = admin.database();
+            var ref = db.ref("server/saving-data/fireblog/users");
 
-        defaultAuth.createUser({
+            // Attach an asynchronous callback to read the data at our posts reference
+            ref.orderByChild("Correo_electronico").on("child_added", function (snapshot) {
+
+                var correo_electronico = snapshot.val().Correo_electronico;
+                var contraseña = snapshot.val().contraseña;
+                console.log(correo_electronico);
+                console.log(contraseña);
+
+                if (correo_electronico === email_usuario_l)
+                    if (contraseña === pass_usuario_l)
+                        admin.auth().createCustomToken({
+                            uid: email_usuario_l,
+                            pass: pass_usuario_l
+                        })
+                        .then(function (customToken) {
+                            // Send token back to client
+                        })
+                        .catch(function (error) {
+                            console.log("Error creating custom token:", error);
+                        });
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            });
+
+
+            /*admin.auth().createCustomToken({
+                uid: email_usuario_l,
+                pass: pass_usuario_l
+            })
+            .then(function (customToken) {
+                // Send token back to client
+            })
+            .catch(function (error) {
+                console.log("Error creating custom token:", error);
+            });*/
+
+
+        }
+
+        /*defaultAuth.createUser({
           uid: email_usuario,
           email: email_usuario,
           password: pass_usuario
@@ -91,23 +184,7 @@ wsServer.on('request', function (request) {
             alert("El correo ya está en uso.");
           else
             console.log("Error creating new user:", error);
-        });
-
-
-        firebase.auth().createUserWithEmailAndPassword(email_usuario, pass_usuario).catch(function(error){
-            //handle erros here
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if(errorCode == "auth/weak-password")
-              alert("La contraseña es débil.");
-            else if(errorCode == "auth/email-already-in-use")
-              alert("El correo ya está en uso.");
-            else
-                alert(errorMessage);
-            alert('Hola estoy creando un usuario');
-        });
-
-
+        });*/
     });
 
     connection.on('close', function (connection) {
