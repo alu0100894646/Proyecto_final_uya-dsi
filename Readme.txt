@@ -16,3 +16,6 @@ TO DO LIST:
 	-> borrar eventos en el calendario
 	-> guardad los eventos en la base de datos
 	-> cargar los eventos de cada usuario al loguearse
+
+
+A-HA TAKE ME ON
