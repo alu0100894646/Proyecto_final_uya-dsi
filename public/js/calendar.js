@@ -3,33 +3,57 @@ $(function () {
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
+       
+        editable: true,
+       
+        eventLimit: true,
+        eventLimitText: "más",
         selectable: true,
-        dayClick: function(date, jsEvent, view) {
+        dayClick: function (date, jsEvent, view) {
             var prueba = prompt('Introduza el evento');
-                if(prueba != null)
-                    $('#calendar').fullCalendar('renderEvent', {
-               
-                        title: prueba, 
-                        start: date,
-                        allDay: true
-                    }, true);
-          
-            //alert('Clicked on: ' + date.format());
+            if (prueba != null)
+                $('#calendar').fullCalendar('renderEvent', {
 
-          
+                    id: prueba,
+                    title: prueba,
+                    start: date,
+                    allDay: true
+                }, true);
 
-            // change the day's background color just for fun
+           
+
             $(this).css('background-color', 'light blue');
+           
+        },
+        eventClick: function(event) {
 
-    },
-        
+            var sel;
+            if (confirm("Desea borrar este evento del calendario?\nEvento: " + event.title)) {
+
+
+                $('#calendar').fullCalendar('removeEvents', event.title);
+                    
+                }
+           
+           
+           
+        },
+
+
+
+
         defaultView: 'month'
         // put your options and callbacks here
-        
 
-    })
+
+    });
+
+
+  
+   
 
 });
+
 
 /*var time;
 var day;
