@@ -134,7 +134,7 @@ wsServer.on('request', function (request) {
             ref.orderByChild("Correo_electronico").on("child_added", function (snapshot) {
            
                 var correo_electronico = snapshot.val().Correo_electronico;
-                var contraseña = snapshot.val().contraseña;
+                var contraseña = snapshot.val().Contraseña;
                 console.log(correo_electronico);
                 console.log(contraseña);
                

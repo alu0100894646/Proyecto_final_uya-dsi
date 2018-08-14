@@ -1,5 +1,8 @@
 $(function () {
 
+  
+
+    
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
@@ -53,7 +56,15 @@ $(function () {
    
 
 });
-
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        console.log('Sesion inciada');
+        console.log('usuario calendario: ' + user);
+    }
+    else {
+        console.log('Sesion no iniciada');
+    }
+});
 
 /*var time;
 var day;
