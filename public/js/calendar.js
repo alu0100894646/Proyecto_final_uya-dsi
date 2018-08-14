@@ -57,6 +57,7 @@ $(function () {
 firebase.auth().onAuthStateChanged(function(user){
   if(user) {
     console.log('Sesion inciada');
+    console.log(user.uid);
   }
   else {
     console.log('Sesion no iniciada');
