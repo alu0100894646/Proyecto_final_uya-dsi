@@ -151,39 +151,62 @@ wsServer.on('request', function (request) {
 
 
 
-            /*admin.auth().createCustomToken({
-                uid: email_usuario_l,
-                pass: pass_usuario_l
-            })
-            .then(function (customToken) {
-                // Send token back to client
-            })
-            .catch(function (error) {
-                console.log("Error creating custom token:", error);
-            });*/
-
-
         }
 
-        /*defaultAuth.createUser({
-          uid: email_usuario,
-          email: email_usuario,
-          password: pass_usuario
-        })
-        .then(function(userRecord) {
-        // See the UserRecord reference doc for the contents of userRecord.
-          console.log("Successfully created new user:", userRecord.uid);
-        })
-        .catch(function(error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          if(errorCode == "auth/weak-password")
-            alert("La contraseña es débil.");
-          else if(errorCode == "auth/email-already-in-use")
-            alert("El correo ya está en uso.");
-          else
-            console.log("Error creating new user:", error);
-        });*/
+        else if (tipo_d === 'save_event')
+        {
+            var id = userDataPar.id;
+            var title = userDataPar.title;
+            var start = userDataPar.start;
+            var user = userDataPar.user;
+            console.log("ID: " + id + " title " + title + " start " + start);
+
+            //Guardando el evento en el servidor
+
+            var db = admin.database();
+
+            db.ref('server/events/' + user).push({
+                id: id,
+                title: title,
+                start: start,
+                allDay: true,
+            });
+        }
+
+        else if (tipo_d === 'onopen')
+        {
+            var uid = userDataPar.uid;
+            console.log("en el onopen " + uid);
+            var db = admin.database();
+            var ref = db.ref("server/events/" + uid);
+
+            ref.on("child_added", function (snapshot) {
+                console.log(snapshot.val().id);
+                var id = snapshot.val().id;
+                var title = snapshot.val().title;
+                var start = snapshot.val().start;
+                var allDay = snapshot.val().allDay;
+                console.log("id " + id);
+                var evento_send = {
+
+                    id: id,
+                    title: title,
+                    start: start,
+                    allDay: allDay
+                }
+                connection.send(JSON.stringify(evento_send));
+               
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+            })
+
+            
+           
+           
+
+          
+        }
+
     });
 
     connection.on('close', function (connection) {
