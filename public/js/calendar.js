@@ -6,11 +6,11 @@ $(function () {
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
-       
+
         editable: true,
-       
+
         eventLimit: true,
-        eventLimitText: "más",
+        eventLimitText: "mï¿½s",
         selectable: true,
         dayClick: function (date, jsEvent, view) {
             var prueba = prompt('Introduza el evento');
@@ -23,10 +23,10 @@ $(function () {
                     allDay: true
                 }, true);
 
-           
+
 
             $(this).css('background-color', 'light blue');
-           
+
         },
         eventClick: function(event) {
 
@@ -35,11 +35,11 @@ $(function () {
 
 
                 $('#calendar').fullCalendar('removeEvents', event.title);
-                    
+
                 }
-           
-           
-           
+
+
+
         },
 
 
@@ -52,9 +52,19 @@ $(function () {
     });
 
 
-  
-   
 
+
+
+});
+
+firebase.auth().onAuthStateChanged(function(user){
+  if(user) {
+    console.log('Sesion inciada');
+    console.log(user.uid);
+  }
+  else {
+    console.log('Sesion no iniciada');
+  }
 });
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {

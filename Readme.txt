@@ -13,7 +13,7 @@ TO DO LIST:
 
 -Calendar HTML:
 	-> ok
-	-> borrar eventos en el calendario
+	-> borrar eventos en el calendario-> done
 	-> guardad los eventos en la base de datos
 	-> cargar los eventos de cada usuario al loguearse
 

@@ -90,7 +90,7 @@ wsServer.on('request', function (request) {
         .then(function (userRecord) {
             // See the UserRecord reference doc for the contents of userRecord.
             console.log("Successfully created new user:", userRecord.uid);
-           
+
         })
         .catch(function (error) {
             var errorCode = error.code;
@@ -105,7 +105,7 @@ wsServer.on('request', function (request) {
 
             var db = admin.database();
            // var ref = db.ref("server/saving-data/fireblog");
-            
+
             var sin = quitarelpunto(email_usuario);
             //var usersRef = ref.child("users");
             console.log(" sin: " + sin);
@@ -115,7 +115,7 @@ wsServer.on('request', function (request) {
                 Nombre: nombre_usuario,
                 Contraseña: pass_usuario
             });
-           
+
             TokenPersonalizado(email_usuario, connection);
         }
 
@@ -125,6 +125,7 @@ wsServer.on('request', function (request) {
             console.log(email_usuario_l);
             var pass_usuario_l = userDataPar.pass_u;
             console.log(pass_usuario_l);
+            console.log('--------------------------');
 
 
             var db = admin.database();
@@ -132,17 +133,17 @@ wsServer.on('request', function (request) {
 
             // Attach an asynchronous callback to read the data at our posts reference
             ref.orderByChild("Correo_electronico").on("child_added", function (snapshot) {
-           
+
                 var correo_electronico = snapshot.val().Correo_electronico;
                 var contraseña = snapshot.val().Contraseña;
                 console.log(correo_electronico);
                 console.log(contraseña);
-               
+
                 if (correo_electronico === email_usuario_l)
                     if (contraseña === pass_usuario_l) {
 
                         TokenPersonalizado(email_usuario_l, connection);
-                        
+
                     }
                     }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
@@ -223,7 +224,7 @@ function TokenPersonalizado(uid, connection) {
 
 function quitarelpunto(cadena) {
 
-    
+
     return cadena.replace(/\./g,'');
-    
+
 }
