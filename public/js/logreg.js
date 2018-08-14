@@ -12,13 +12,12 @@ firebase.initializeApp(config);
 }());*/
 
 // var rootRef = firebase.database().ref();
-
-
+var new_token;
 
 firebase.auth().onAuthStateChanged(function(user) {
     if(user)
     {
-        window.location = 'calendar.html'; //After successful login, user will be redirected to calendar.html
+        window.location.replace('calendar.html?token=' + user.uid); //After successful login, user will be redirected to calendar.html
     }
     else
     {
@@ -119,7 +118,7 @@ function validar_formulario() {
     };
 
     connection.onmessage = function (token) {
-        var new_token = token.data;
+         new_token = token.data;
 
         console.log("He llegado");
 

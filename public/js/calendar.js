@@ -1,7 +1,19 @@
+
+var user_;
+
+
 $(function () {
 
-  
+ 
+   // console.log('user dentro de la función calendario' + user_.uid);
+    var decoded = decodeURIComponent(window.location.search);
+    decoded = decoded.substring(1);
+    var queries = decoded.split("&");
+    queries[0] = queries[0].substring(6);
+    
 
+    var user_sin = quitarelpunto(queries[0]);
+    console.log(user_sin);
     
     // page is now ready, initialize the calendar...
 
@@ -57,24 +69,25 @@ $(function () {
 
 });
 
-firebase.auth().onAuthStateChanged(function(user){
-  if(user) {
-    console.log('Sesion inciada');
-    console.log(user.uid);
-  }
-  else {
-    console.log('Sesion no iniciada');
-  }
-});
-firebase.auth().onAuthStateChanged(function (user) {
+
+/*firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+
+        user_ = user;
         console.log('Sesion inciada');
-        console.log('usuario calendario: ' + user);
+        console.log('usuario calendario: ' + user_.uid);
     }
     else {
         console.log('Sesion no iniciada');
     }
-});
+});*/
+
+function quitarelpunto(cadena) {
+
+
+    return cadena.replace(/\./g, '');
+
+}
 
 /*var time;
 var day;
