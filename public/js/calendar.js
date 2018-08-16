@@ -28,23 +28,23 @@ $(function () {
         // an error occurred when sending/receiving data
     };
 
+    var string_eventos = [];
+    var event;
     connection.onmessage = function (evento_send) {
 
         var evento = evento_send.data;
-        console.log("evento: " + evento);
-        var event = {
-            id: evento.id,
-            title: evento.title,
-            start: evento.start,
-            allDay: evento.allDay
+        var eventoParse = JSON.parse(evento);
+        //console.log("eventos id "+evento.id)
+        event = {
+            id: eventoParse.id,
+            title: eventoParse.title,
+            start: eventoParse.start,
+            allDay: eventoParse.allDay
         }
-        
-        $('#calendar').fullCalendar('renderEvent', event, true);
-
-
-
+        console.log(event);
+        string_eventos.push(event);
+        //$('#calendar').fullCalendar('renderEvent', event, true);
         console.log("recibido");
-         
     }
     
    
@@ -53,11 +53,13 @@ $(function () {
     $('#calendar').fullCalendar({
      
         editable: true,
-
+        
         eventLimit: true,
         eventLimitText: "m�s",
         selectable: true,
         dayClick: function (date, jsEvent, view) {
+            for (var i = 0; i < string_eventos.length;i++)
+                $('#calendar').fullCalendar('renderEvent', string_eventos[i], true);
             var prueba = prompt('Introduza el evento');
             var insert = {
                 tipo: 'save_event',
@@ -72,7 +74,7 @@ $(function () {
                 $('#calendar').fullCalendar('renderEvent', insert, true);
 
             $(this).css('background-color', 'light blue');
-
+            
         },
         eventClick: function(event) {
 
@@ -84,7 +86,7 @@ $(function () {
 
         },
 
-        defaultView: 'month'
+        defaultView: 'month',
         // put your options and callbacks here
     });
 
