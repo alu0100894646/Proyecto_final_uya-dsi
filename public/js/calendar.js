@@ -82,6 +82,20 @@ $(function () {
             if (confirm("Desea borrar este evento del calendario?\nEvento: " + event.title)) {
                 $('#calendar').fullCalendar('removeEvents', event.title);
 
+                console.log("user_sin: " + user_sin);
+              
+                
+                    var del = {
+                        tipo: 'borrar',
+                        uid: user_sin,
+                        title: event.title,
+                        id: event.id
+
+                    }
+
+                    connection.send(JSON.stringify(del));
+
+                
             }
 
         },

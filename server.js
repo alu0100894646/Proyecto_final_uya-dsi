@@ -200,11 +200,24 @@ wsServer.on('request', function (request) {
             })
 
 
-
-
-
-
         }
+
+        else if (tipo_d === "borrar") {
+
+            var title = userDataPar.title;
+            var id = userDataPar.id;
+            var uid = userDataPar.uid;
+            var db = admin.database();
+            var ref = db.ref("server/events/" + uid);
+            console.log("evento que se va a borrar: " + title +" " + uid);
+            ref.orderByChild("id").on("child_added", function (snapshot){
+
+                console.log("titulo " + snapshot.val().title);
+                if (snapshot.val().title === title) {
+                    snapshot.ref.remove();
+                }
+            })
+        };
 
     });
 
