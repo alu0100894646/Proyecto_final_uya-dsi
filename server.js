@@ -188,23 +188,22 @@ wsServer.on('request', function (request) {
                 var allDay = snapshot.val().allDay;
                 console.log("id " + id);
                 var evento_send = {
-
                     id: id,
                     title: title,
                     start: start,
                     allDay: allDay
                 }
                 connection.send(JSON.stringify(evento_send));
-               
+
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             })
 
-            
-           
-           
 
-          
+
+
+
+
         }
 
     });

@@ -1,5 +1,7 @@
-$(function () {
+var string_eventos = [];
 
+$(function () {
+    console.log('Holi');
     //Decodificación de la URL a la que le pasamos el usuario para hacer la
     //consulta a la base de datos.
     // console.log('user dentro de la función calendario' + user_.uid);
@@ -7,7 +9,7 @@ $(function () {
     decoded = decoded.substring(1);
     var queries = decoded.split("&");
     queries[0] = queries[0].substring(6);
-    
+
 
     var user_sin = quitarelpunto(queries[0]);
     console.log(user_sin);
@@ -28,7 +30,6 @@ $(function () {
         // an error occurred when sending/receiving data
     };
 
-    var string_eventos = [];
     var event;
     connection.onmessage = function (evento_send) {
 
@@ -46,20 +47,19 @@ $(function () {
         //$('#calendar').fullCalendar('renderEvent', event, true);
         console.log("recibido");
     }
-    
-   
+
+
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
-     
         editable: true,
-        
         eventLimit: true,
         eventLimitText: "m�s",
         selectable: true,
+
         dayClick: function (date, jsEvent, view) {
-            for (var i = 0; i < string_eventos.length;i++)
-                $('#calendar').fullCalendar('renderEvent', string_eventos[i], true);
+            // for (var i = 0; i < string_eventos.length;i++)
+            //     $('#calendar').fullCalendar('renderEvent', string_eventos[i], true);
             var prueba = prompt('Introduza el evento');
             var insert = {
                 tipo: 'save_event',
@@ -74,7 +74,7 @@ $(function () {
                 $('#calendar').fullCalendar('renderEvent', insert, true);
 
             $(this).css('background-color', 'light blue');
-            
+
         },
         eventClick: function(event) {
 
@@ -97,4 +97,13 @@ function quitarelpunto(cadena) {
 
     return cadena.replace(/\./g, '');
 
+}
+
+function cargar_eventos(){
+  console.log('Cargando eventos...');
+  for (var i = 0; i < string_eventos.length;i++)
+  {
+      $('#calendar').fullCalendar('renderEvent', string_eventos[i], true);
+      console.log(string_eventos[i]);
+  }
 }
