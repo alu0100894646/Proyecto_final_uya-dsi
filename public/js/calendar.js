@@ -30,9 +30,12 @@ $(function () {
 
     var string_eventos = [];
     var event;
+    var evento;
     connection.onmessage = function (evento_send) {
 
-        var evento = evento_send.data;
+        evento = evento_send.data;
+        console.log(evento);
+        string_eventos.push(evento);
         var eventoParse = JSON.parse(evento);
         //console.log("eventos id "+evento.id)
         event = {
@@ -41,13 +44,11 @@ $(function () {
             start: eventoParse.start,
             allDay: eventoParse.allDay
         }
-        console.log(event);
-        string_eventos.push(event);
+        //console.log(event);
+        //string_eventos.push(event);
         //$('#calendar').fullCalendar('renderEvent', event, true);
         console.log("recibido");
     }
-    
-   
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
@@ -58,8 +59,7 @@ $(function () {
         eventLimitText: "m�s",
         selectable: true,
         dayClick: function (date, jsEvent, view) {
-            for (var i = 0; i < string_eventos.length;i++)
-                $('#calendar').fullCalendar('renderEvent', string_eventos[i], true);
+            
             var prueba = prompt('Introduza el evento');
             var insert = {
                 tipo: 'save_event',
@@ -85,9 +85,18 @@ $(function () {
             }
 
         },
+        events: string_eventos,
 
         defaultView: 'month',
         // put your options and callbacks here
+        loading: function (isLoading,view) {
+            if(isLoading)
+            for (var i = 0; i < string_evento.length; i++)
+                    $('#calendar').fullCalendar('renderEvent', string_eventos[i], true);
+            else {
+                console.log("Error al cargar los eventos");
+            }
+        },
     });
 
 });
@@ -97,4 +106,8 @@ function quitarelpunto(cadena) {
 
     return cadena.replace(/\./g, '');
 
+}
+
+function cargameloeventos(aspkmaskma) { //cargaloseventos
+    $("calendar").fullCalendar
 }
