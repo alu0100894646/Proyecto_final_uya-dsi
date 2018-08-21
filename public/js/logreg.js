@@ -26,13 +26,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
-
 function log_in() {
 
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
 
-    var connection = new WebSocket('ws://https://dsi-pfinal.firebaseapp.com:1337');
+    var connection = new WebSocket('ws://limitless-ridge-77891.herokuapp.com/');
 
     if (email === "") {
         alert("Error al escribir el email");
@@ -83,7 +82,7 @@ function validar_formulario() {
     var email = document.getElementById("email_reg").value;
     var pass = document.getElementById("password_reg").value;
 
-    var connection = new WebSocket('ws://https://dsi-pfinal.firebaseapp.com:1337');
+    var connection = new WebSocket('ws://limitless-ridge-77891.herokuapp.com/');
 
     if (nombre === "") {
         alert("Error al escribir el nombre");
