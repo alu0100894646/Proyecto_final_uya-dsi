@@ -221,12 +221,12 @@ app.get('/', (req, res) => {
 
 
 
-app.listen(port, (err) => {
+app.listen(process.env.PORT, (err) => {
     if (err) {
         return console.log('Ha ocurrido un error', err);
     }
     console.log(__dirname);
-    console.log('Server escuchando en ' + port);
+    console.log('Server escuchando en ' + process.env.PORT);
 })
 
 function TokenPersonalizado(uid, connection) {
