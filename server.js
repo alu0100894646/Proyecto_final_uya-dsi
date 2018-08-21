@@ -14,20 +14,6 @@ var defaultApp = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://dsi-pfinal.firebaseio.com"
 });
-/*var defaultApp = admin.initializeApp({
-    credential: admin.credential.cert({
-        "project_id": "dsi-pfinal",
-        "private_key_id": "c7d80f3fb774cd9231c47d6b4dc063f23d603ef8",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCer9x/vaNJ1pQl\n84CjmCZU5FxYLDFV8cl+IfLvclo2zJyczW8/iE2QBNXl2IYRLCZCiFDytOyccmU0\nz38O6vICNWBs6ouY8yZraYWk4rfc/AFBLpQDCO0FzKUZkYNLeyZzeQwKIx0TgCMn\nflWNX3xmZpCfk+yph3gLJB3+5nIgF9zKNRlasc43FCDLqS9nKVQJ95yCaNCXkxok\nNahSpDRf3pn84kgCW7OEQ5CHczEpGxv0mCliTgaP/jDDXyybgkHnWLry6YxHC/6t\nf0JJg7WIjuyVck2cxQjMGBiFJhYDXJxx+4oT7++8WG4Mn+wuXOYbQmBGQp6aJJti\npLuA9fGfAgMBAAECggEAAYBKiSRyl0CPB3nEaCtUe0bOydzQ3S4yQGTyyKv69mtz\nPjGHBHDzwkp13SwOj26oCpdg7+o9kW863AM3+BMoYYO1ThFGh9Q0t/vsVvLui74j\nI0V+O2Vp9eyjtR0jY+WEAbaspuO/2YRgF96yjxRdKWF95IZW7jypDfEJj8CW/fBq\n/VWSXrFoAOAamhRPT7eXeHwZw9yBwRte2q/FqfEVmYScGhMUPRDipr1Zi2e0OeY3\ntsXmG4tcuuwqhtoeSCIUvkh4USmuQtj5rxSAh56+ElZy+BT9AUXf6KYNJDhMDbw/\nNFlKk04gwG/jQIq93bR90QU1VlMgTIUck16a94h+8QKBgQDYKZYiry41nEsHT8vH\nQm0fJvQfTQXieKyRRGR5ZTkW20HsXZo4qFXv6+PyTeeiT0z8XxFq69AsVf2jCRAw\n8QKDPAyU43dzW8E6kryA7aK93IKAS3wtMMlXhkh6cvqn1RCx8FD0Y+YeGlW1B79Q\nWB5JEd0BcJnuUBdaao2XRZN8aQKBgQC77p21k/pS02td3MlVSmXEFHtlHxkwp48G\nePgFpU5O1f6jTpgVp2cp3ZeNRgthp1oNMJCUyckXPNQT6BNzbwKKgVH1BxS8/C+F\n0kDcAtlm7kDzyQXvV/+MQpm7oOw7MZ0O61rMb+14uiPS+nrzpuac1zUUFrHl2yQf\nyDUxNHbcxwKBgQDAIla8hZFBPabC3P54Imbz5Z/fooq0fiaFCJF2Ba70zfaOrbRC\n3/1iv/1ghjZ5Yps/RxEoRGpIvjYwEAJAPjjJhTp5rKWj986MzZiX0KFyuOmWN4Is\neMy96zHJBSIew5ePUdfjIliMMUQ1IKnANFLXB/W1LezkknPvff5UkxdA4QKBgHcl\ny1spnFUSsUlrB0JJzsdH7QupccEFGoqR+z0pFsKora4/z/A6mA9U7BanR+P7w/4E\nwkVywUk4SYTtaBeRU90YLCva92zxvfdr268hJ1A40Xk+A8NA2UXFm833Mo484ERr\nNr/SXo5iBQBnybfcIu1hC8fWs6b1DqwPtJmjl5BVAoGAfbZB4oYIQglLQnozF8oh\nK42WVEi73QNTKGAQr6/PjdcMKvQIpdbLJZTi33h7ds1w8sxgIjwS9hIxWl7idjQb\nV62H16ZXLkB3U4PeFgAvqUVnQBziB3YFblPxhWnvx3pEQlC79ZCpH9SDL6aINWgc\nUCXyss/f0UbhxIgOmD7Tv04=\n-----END PRIVATE KEY-----\n",
-        "client_email": "firebase-adminsdk-nrdcz@dsi-pfinal.iam.gserviceaccount.com",
-        "client_id": "107030671449407450542",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-nrdcz%40dsi-pfinal.iam.gserviceaccount.com"
-    }),
-    databaseURL: "https://dsi-pfinal.firebaseio.com"
-});*/
 
 // Initialize the default app
 console.log(defaultApp.name);  // '[DEFAULT]'
@@ -62,6 +48,7 @@ wsServer.on('request', function (request) {
     // all messages from users here.
     connection.on('message', function (message) {
 
+        //El servidor recibe un mensaje del cliente
         console.log(message);
         console.log('he recibido un mensaje');
 
@@ -70,7 +57,7 @@ wsServer.on('request', function (request) {
 
 
         var tipo_d = userDataPar.tipo;
-
+        //Un JSON utilizado para registrar el usuario en el servidor
         if (tipo_d === 'registro') {
             console.log(tipo_d);
             var nombre_usuario = userDataPar.nombre_u;
@@ -118,7 +105,7 @@ wsServer.on('request', function (request) {
 
             TokenPersonalizado(email_usuario, connection);
         }
-
+        //El JSON correspondiente al Login
         else if (tipo_d === 'login') {
             console.log(tipo_d);
             var email_usuario_l = userDataPar.email_u;
@@ -152,7 +139,7 @@ wsServer.on('request', function (request) {
 
 
         }
-
+        //Request para guardar un evento de un usuario en el servidor
         else if (tipo_d === 'save_event')
         {
             var id = userDataPar.id;
@@ -172,7 +159,7 @@ wsServer.on('request', function (request) {
                 allDay: true,
             });
         }
-
+        //Petición del cliente para cargar todos los eventos del usuario al conectarse
         else if (tipo_d === 'onopen')
         {
             var uid = userDataPar.uid;
@@ -188,24 +175,36 @@ wsServer.on('request', function (request) {
                 var allDay = snapshot.val().allDay;
                 console.log("id " + id);
                 var evento_send = {
-
                     id: id,
                     title: title,
                     start: start,
                     allDay: allDay
                 }
                 connection.send(JSON.stringify(evento_send));
-               
+
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             })
 
-            
-           
-           
 
-          
         }
+        //Petición del cliente para borrar un evento de la base de datos en el calendario
+        else if (tipo_d === "borrar") {
+
+            var title = userDataPar.title;
+            var id = userDataPar.id;
+            var uid = userDataPar.uid;
+            var db = admin.database();
+            var ref = db.ref("server/events/" + uid);
+            console.log("evento que se va a borrar: " + title +" " + uid);
+            ref.orderByChild("id").on("child_added", function (snapshot){
+
+                console.log("titulo " + snapshot.val().title);
+                if (snapshot.val().title === title) {
+                    snapshot.ref.remove();
+                }
+            })
+        };
 
     });
 
@@ -214,8 +213,6 @@ wsServer.on('request', function (request) {
     });
 });
 
-//app.use("/public", express.static(path.resolve(__dirname,'../', 'public')));
-//app.use(express.static('public'));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {

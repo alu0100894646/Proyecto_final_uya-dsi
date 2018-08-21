@@ -14,8 +14,8 @@ TO DO LIST:
 -Calendar HTML:
 	-> ok
 	-> borrar eventos en el calendario-> done
-	-> guardad los eventos en la base de datos
-	-> cargar los eventos de cada usuario al loguearse
+	-> guardad los eventos en la base de datos -> done
+	-> cargar los eventos de cada usuario al loguearse -> done
 
 
 A-HA TAKE ME ON
