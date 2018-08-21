@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var port = 3000;
+var port = process.env.PORT || 5000;
+var http = require('http');
 //import firebase from 'firebase'
 
 //Parte de la autenticación del SDK
@@ -9,6 +10,13 @@ var admin = require("firebase-admin");
 
 var serviceAccount = require('./dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.json');
 
+app.use(express.static(__dirname + '/public'));
+
+var server = http.createServer(app);
+server.listen(port);
+
+
+var WebSocketServer = require('websocket').server;
 
 var defaultApp = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -26,14 +34,18 @@ var defaultDatabase = defaultApp.database();
 defaultAuth = admin.auth();
 defaultDatabase = admin.database();
 
-var WebSocketServer = require('websocket').server;
-var http = require('http');
 
-var server = http.createServer(function (request, response) {
-    // process HTTP request. Since we're writing just WebSockets
-    // server we don't have to implement anything.
-});
-server.listen(1337, function () { });
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+})
+
+app.listen(port, (err) => {
+    if (err) {
+        return console.log('Ha ocurrido un error', err);
+    }
+    console.log(__dirname);
+    console.log('Server escuchando en ' + port);
+})
 
 // create the server
 wsServer = new WebSocketServer({
@@ -213,21 +225,7 @@ wsServer.on('request', function (request) {
     });
 });
 
-app.use(express.static(__dirname + '/public'));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-})
-
-
-
-app.listen(process.env.PORT, (err) => {
-    if (err) {
-        return console.log('Ha ocurrido un error', err);
-    }
-    console.log(__dirname);
-    console.log('Server escuchando en ' + process.env.PORT);
-})
 
 function TokenPersonalizado(uid, connection) {
 
