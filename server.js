@@ -22,9 +22,9 @@ console.log(defaultApp.name);  // '[DEFAULT]'
 var defaultAuth = defaultApp.auth();
 var defaultDatabase = defaultApp.database();
 
-// ... or use the equivalent shorthand notation
+/*// ... or use the equivalent shorthand notation
 defaultAuth = admin.auth();
-defaultDatabase = admin.database();
+defaultDatabase = admin.database();*/
 
 var WebSocketServer = require('websocket').server;
 var http = require('http');
@@ -50,9 +50,7 @@ var server = http.createServer(function (request, response) {
 server.listen(port);
 
 // create the server
-wsServer = new WebSocketServer({
-    httpServer: server
-});
+wsServer = new WebSocketServer({server});
 
 // WebSocket server
 wsServer.on('request', function (request) {
