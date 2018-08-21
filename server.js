@@ -13,7 +13,8 @@ var serviceAccount = require('./dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.js
 
 app.use(express.static(__dirname + '/public'));
 
-var server = http.createServer(app);
+//puede ser x esto el error
+var server = http.createServer(/*app*/);
 server.listen(port);
 
 
