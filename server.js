@@ -2,15 +2,13 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var port = process.env.PORT || 3000;
-var http = require('http').Server(app);
+var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var admin = require("firebase-admin");
 var serviceAccount = require('./dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.json');
 //import firebase from 'firebase'
 
 //Parte de la autenticación del SDK
-
-
 
 
 var defaultApp = admin.initializeApp({
@@ -35,24 +33,22 @@ defaultDatabase = admin.database();*/
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules'));
 
-
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
 
-app.listen(port, (err) => {
-    if (err) {
-        return console.log('Ha ocurrido un error', err);
-    }
-    console.log(__dirname);
-    console.log('Server escuchando en ' + port);
-})
+// app.listen(port, (err) => {
+//     if (err) {
+//         return console.log('Ha ocurrido un error', err);
+//     }
+//     console.log(__dirname);
+//     console.log('Server escuchando en ' + port);
+// })
 
-/*var server = http.createServer(function (request, response) {
-    // process HTTP request. Since we're writing just WebSockets
-    // server we don't have to implement anything.
+// var server = http.createServer(app);
+http.listen(port, () => {
+  console.log('Server funcionando y escuchando en el localhost:' + port);
 });
-server.listen(port);*/
 
 // create the server
 /*wsServer = new WebSocketServer({
@@ -95,13 +91,19 @@ io.on('connection', function (socket) {
 
     socket.on('registro', function (data) {
 
+        console.log('Registrando usuario nuevo...');
+
         var nombre_usuario = data.nombre_u;
+        console.log(nombre_usuario);
 
         var apellidos_usuario = data.apellidos_u;
+        console.log(apellidos_usuario);
 
         var email_usuario = data.email_u;
+        console.log(email_usuario);
 
         var pass_usuario = data.pass_u;
+        console.log('Registrando usuario nuevo...');
 
         defaultAuth.createUser({
             uid: email_usuario,

@@ -1,19 +1,6 @@
-var io = require('socket.io-client');
-// Initialize Firebase
-/*(function(){
-var config = {
-  apiKey: "AIzaSyCrRr1EEQNOXhlTNd-3JWd3pCDWS8tTyhU",
-  authDomain: "dsi-pfinal.firebaseapp.com",
-  databaseURL: "https://dsi-pfinal.firebaseio.com",
-  projectId: "dsi-pfinal",
-  storageBucket: "dsi-pfinal.appspot.com",
-  messagingSenderId: "223396973865"
-};
-firebase.initializeApp(config);
-}());*/
 
-// var rootRef = firebase.database().ref();
 var new_token;
+var socket = io();
 
 
 firebase.auth().onAuthStateChanged(function(user) {
@@ -33,12 +20,6 @@ function log_in() {
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
 
-    var host = location.origin.replace(/^http/, 'ws');
-    //var connection = new WebSocket(host);
-    
-    var socket = io();
-    //var connection = new WebSocket('ws://limitless-ridge-77891.herokuapp.com/');
-
     if (email === "") {
         alert("Error al escribir el email");
         return false;
@@ -55,45 +36,19 @@ function log_in() {
         pass_u: pass
     };
 
-    socket.on('connect', function () {
-        socket.emit('login', login_cliente);
+    socket.emit('login', login_cliente);
 
-        socket.on('customToken', function (token) {
+    socket.on('customToken', function (token) {
 
-            firebase.auth().signInWithCustomToken(token).catch(function (error) {
-
-                var errorCode = error.code;
-                var errorMessage = error.message;
-
-            });
-        });
-    });
-    /*
-    connection.onopen = function () {
-        // connection is opened and ready to use
-        connection.send(JSON.stringify(login_cliente));
-    };
-
-    connection.onerror = function (error) {
-        // an error occurred when sending/receiving data
-
-    };
-    connection.onmessage = function (token) {
-        var new_token = token.data;
-
-        console.log("He llegado");
-        
-        firebase.auth().signInWithCustomToken(new_token).catch(function (error) {
-            // Handle Errors here.
+        firebase.auth().signInWithCustomToken(token).catch(function (error) {
 
             var errorCode = error.code;
             var errorMessage = error.message;
-            // ...
+
         });
-    }
-    */
+    });
 }
-    
+
 function validar_formulario() {
 
     var nombre = document.getElementById("first_name").value;
@@ -101,11 +56,6 @@ function validar_formulario() {
     var v_email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var email = document.getElementById("email_reg").value;
     var pass = document.getElementById("password_reg").value;
-
-    var host = location.origin.replace(/^http/, 'ws');
-    //var connection = new WebSocket(host);
-    var socket = io();
-    //var connection = new WebSocket('ws://limitless-ridge-77891.herokuapp.com/');
 
     if (nombre === "") {
         alert("Error al escribir el nombre");
@@ -129,45 +79,15 @@ function validar_formulario() {
         pass_u: pass
     };
 
+    socket.emit('registro', info_cliente);
 
-    socket.on('connection', function () {
-        socket.emit('registro', info_cliente);
-
-        socket.on('customToken', function (token) {
-            firebase.auth().signInWithCustomToken(token).catch(function (error) {
+    socket.on('customToken', function (token) {
+        firebase.auth().signInWithCustomToken(token).catch(function (error) {
                 // Handle Errors here.
-
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ...
-            });
-        });
-
-    });
-    /*
-    connection.onopen = function () {
-        // connection is opened and ready to use
-        connection.send(JSON.stringify(info_cliente));
-    };
-
-    connection.onerror = function (error) {
-        // an error occurred when sending/receiving data
-
-    };
-
-    connection.onmessage = function (token) {
-         new_token = token.data;
-
-        console.log("He llegado");
-
-        firebase.auth().signInWithCustomToken(new_token).catch(function (error) {
-            // Handle Errors here.
 
             var errorCode = error.code;
             var errorMessage = error.message;
-            // ...
+                // ...
         });
-    }
-    */
-  
+    });
 }
