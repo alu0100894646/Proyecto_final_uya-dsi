@@ -24,6 +24,8 @@
     "npm": "^6.4.0",
     "require": "^2.4.20",
     "requirejs": "^2.3.5",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
     "websocket": "^1.0.26"
   }
 }

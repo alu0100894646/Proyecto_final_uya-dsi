@@ -1,13 +1,16 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var port = 3000;
+var port = process.env.PORT || 3000;
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var admin = require("firebase-admin");
+var serviceAccount = require('./dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.json');
 //import firebase from 'firebase'
 
 //Parte de la autenticación del SDK
-var admin = require("firebase-admin");
 
-var serviceAccount = require('./dsi-pfinal-firebase-adminsdk-nrdcz-c7d80f3fb7.json');
+
 
 
 var defaultApp = admin.initializeApp({
@@ -26,34 +29,182 @@ var defaultDatabase = defaultApp.database();
 defaultAuth = admin.auth();
 defaultDatabase = admin.database();*/
 
-var WebSocketServer = require('websocket').server;
-var http = require('http');
+//var WebSocketServer = require('websocket').server;
+
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/node_modules'));
+
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
 
-app.listen(process.env.PORT, (err) => {
+app.listen(port, (err) => {
     if (err) {
         return console.log('Ha ocurrido un error', err);
     }
     console.log(__dirname);
-    console.log('Server escuchando en ' + process.env.PORT);
+    console.log('Server escuchando en ' + port);
 })
 
-var server = http.createServer(function (request, response) {
+/*var server = http.createServer(function (request, response) {
     // process HTTP request. Since we're writing just WebSockets
     // server we don't have to implement anything.
 });
-server.listen(port);
+server.listen(port);*/
 
 // create the server
-wsServer = new WebSocketServer({server});
+/*wsServer = new WebSocketServer({
+    httpServer: server
+});*/
 
 // WebSocket server
-wsServer.on('request', function (request) {
+
+
+io.on('connection', function (socket) {
+    console.log('Se ha conectado un usuario');
+
+    socket.on('onopen', function (data) {
+
+        var uid = data.uid;
+        console.log("en el onopen " + uid);
+        var db = admin.database();
+        var ref = db.ref("server/events/" + uid);
+
+        ref.on("child_added", function (snapshot) {
+            console.log(snapshot.val().id);
+            var id = snapshot.val().id;
+            var title = snapshot.val().title;
+            var start = snapshot.val().start;
+            var allDay = snapshot.val().allDay;
+            console.log("id " + id);
+            var evento_send = {
+                id: id,
+                title: title,
+                start: start,
+                allDay: allDay
+            }
+            socket.emit('onopen', evento_send);
+            //connection.send(JSON.stringify(evento_send));
+
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        })
+    });
+
+    socket.on('registro', function (data) {
+
+        var nombre_usuario = data.nombre_u;
+
+        var apellidos_usuario = data.apellidos_u;
+
+        var email_usuario = data.email_u;
+
+        var pass_usuario = data.pass_u;
+
+        defaultAuth.createUser({
+            uid: email_usuario,
+            email: email_usuario,
+            password: pass_usuario
+        })
+            .then(function (userRecord) {
+                // See the UserRecord reference doc for the contents of userRecord.
+                console.log("Successfully created new user:", userRecord.uid);
+
+            })
+            .catch(function (error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode == "auth/weak-password")
+                    alert("La contraseña es débil.");
+                else if (errorCode == "auth/email-already-in-use")
+                    alert("El correo ya está en uso.");
+                else
+                    console.log("Error creating new user:", error);
+            });
+
+        var db = admin.database();
+        // var ref = db.ref("server/saving-data/fireblog");
+
+        var sin = quitarelpunto(email_usuario);
+        //var usersRef = ref.child("users");
+        console.log(" sin: " + sin);
+        db.ref('server/users/' + sin).set({
+            Apellidos: apellidos_usuario,
+            Correo_electronico: email_usuario,
+            Nombre: nombre_usuario,
+            Contraseña: pass_usuario
+        });
+
+        TokenPersonalizado(email_usuario, socket);
+    });
+
+    socket.on('login', function (data) {
+
+        var email_usuario_l = data.email_u;
+        var pass_usuario_l = data.pass_u;
+        var db = admin.database();
+        var ref = db.ref("server/users");
+
+        // Attach an asynchronous callback to read the data at our posts reference
+        ref.orderByChild("Correo_electronico").on("child_added", function (snapshot) {
+
+            var correo_electronico = snapshot.val().Correo_electronico;
+            var contraseña = snapshot.val().Contraseña;
+            console.log(correo_electronico);
+            console.log(contraseña);
+
+            if (correo_electronico === email_usuario_l)
+                if (contraseña === pass_usuario_l) {
+
+                    TokenPersonalizado(email_usuario_l, socket);
+
+                }
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+    });
+
+    socket.on('save_event', function (data) {
+
+        var id = data.id;
+        var title = data.title;
+        var start = data.start;
+        var user = data.user;
+        console.log("ID: " + id + " title " + title + " start " + start);
+
+        //Guardando el evento en el servidor
+
+        var db = admin.database();
+
+        db.ref('server/events/' + user).push({
+            id: id,
+            title: title,
+            start: start,
+            allDay: true,
+        });
+    });
+
+    socket.on('erase_event', function (data) {
+        var title = data.title;
+        var id = data.id;
+        var uid = data.uid;
+        var db = admin.database();
+        var ref = db.ref("server/events/" + uid);
+        console.log("evento que se va a borrar: " + title + " " + uid);
+        ref.orderByChild("id").on("child_added", function (snapshot) {
+
+            console.log("titulo " + snapshot.val().title);
+            if (snapshot.val().title === title) {
+                snapshot.ref.remove();
+            }
+        })
+    });
+});
+
+
+/*wsServer.on('request', function (request) {
     var connection = request.accept(null, request.origin);
 
     // This is the most important callback for us, we'll handle
@@ -223,16 +374,16 @@ wsServer.on('request', function (request) {
     connection.on('close', function (connection) {
         // close user connection
     });
-});
+});*/
 
 
 
-function TokenPersonalizado(uid, connection) {
+function TokenPersonalizado(uid, socket) {
 
     admin.auth().createCustomToken(uid).then(function (customToken) {
         // Send token back to client
 
-        connection.send(customToken);
+        socket.emit('customToken',customToken);
 
     })
 .catch(function (error) {

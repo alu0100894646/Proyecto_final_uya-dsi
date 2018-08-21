@@ -1,3 +1,4 @@
+var io = require('socket.io-client');
 // Initialize Firebase
 /*(function(){
 var config = {
@@ -13,6 +14,7 @@ firebase.initializeApp(config);
 
 // var rootRef = firebase.database().ref();
 var new_token;
+
 
 firebase.auth().onAuthStateChanged(function(user) {
     if(user)
@@ -32,8 +34,9 @@ function log_in() {
     var pass = document.getElementById("password").value;
 
     var host = location.origin.replace(/^http/, 'ws');
-    var connection = new WebSocket(host);
-
+    //var connection = new WebSocket(host);
+    
+    var socket = io();
     //var connection = new WebSocket('ws://limitless-ridge-77891.herokuapp.com/');
 
     if (email === "") {
@@ -52,6 +55,20 @@ function log_in() {
         pass_u: pass
     };
 
+    socket.on('connect', function () {
+        socket.emit('login', login_cliente);
+
+        socket.on('customToken', function (token) {
+
+            firebase.auth().signInWithCustomToken(token).catch(function (error) {
+
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+            });
+        });
+    });
+    /*
     connection.onopen = function () {
         // connection is opened and ready to use
         connection.send(JSON.stringify(login_cliente));
@@ -74,7 +91,7 @@ function log_in() {
             // ...
         });
     }
-
+    */
 }
     
 function validar_formulario() {
@@ -86,8 +103,8 @@ function validar_formulario() {
     var pass = document.getElementById("password_reg").value;
 
     var host = location.origin.replace(/^http/, 'ws');
-    var connection = new WebSocket(host);
-
+    //var connection = new WebSocket(host);
+    var socket = io();
     //var connection = new WebSocket('ws://limitless-ridge-77891.herokuapp.com/');
 
     if (nombre === "") {
@@ -112,6 +129,22 @@ function validar_formulario() {
         pass_u: pass
     };
 
+
+    socket.on('connection', function () {
+        socket.emit('registro', info_cliente);
+
+        socket.on('customToken', function (token) {
+            firebase.auth().signInWithCustomToken(token).catch(function (error) {
+                // Handle Errors here.
+
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+            });
+        });
+
+    });
+    /*
     connection.onopen = function () {
         // connection is opened and ready to use
         connection.send(JSON.stringify(info_cliente));
@@ -135,6 +168,6 @@ function validar_formulario() {
             // ...
         });
     }
-
+    */
   
 }
