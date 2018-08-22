@@ -330,3 +330,17 @@ body, html {
     display: block;
   }
 }
+
+#userlogged
+{
+  font-size:1vw;
+  display: inline-block;
+  left: 0;
+}
+
+#button_logout
+{
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}

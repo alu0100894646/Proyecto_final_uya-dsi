@@ -51,3 +51,9 @@ p {
 footer.page-footer {
   margin: 0;
 }
+
+#logo-container-logreg
+{
+  font-size: 2vw;
+  padding: 1em 20px 2em;
+}

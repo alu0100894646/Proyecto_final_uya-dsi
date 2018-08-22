@@ -59,7 +59,7 @@ http.listen(port, () => {
 
 
 io.on('connection', function (socket) {
-    console.log('Se ha conectado un usuario');
+    // console.log('Se ha conectado un usuario');
 
     socket.on('onopen', function (data) {
 
@@ -394,8 +394,5 @@ function TokenPersonalizado(uid, socket) {
 }
 
 function quitarelpunto(cadena) {
-
-
     return cadena.replace(/\./g,'');
-
 }

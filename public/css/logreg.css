@@ -32,3 +32,9 @@ h5
 {
 	position: absolute;
 }
+
+#contenedor_grande
+{
+	max-height: 1000px;
+	height: 50%;
+}

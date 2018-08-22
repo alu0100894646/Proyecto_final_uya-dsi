@@ -9,15 +9,17 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
   <link href="css/logreg.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/css/style.css" type="text/css"  media="screen,projection" rel="stylesheet"/>
   <!--<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script> -->
 </head>
 
 
 <body>
-<div class="container white z-depth-2">
+  <a id="logo-container-logreg" href="index.html" class="brand-logo teal-text">TempUX</a>
+<div class="container white z-depth-2" id="contenedor_grande">
 	<ul class="tabs teal">
 		<li class="tab col s3"><a class="white-text active" href="#login" id="login_li">Login</a></li>
-		<li class="tab col s3"><a class="white-text" href="#register" id="register_li">Registrarse</a></li>
+		<li class="tab col s3"><a class="white-text" href="#register" id="register_li" onclick="document.getElementById('contenedor_grande').style.height = '100%';">Registrarse</a></li>
 	</ul>
 	<div id="login" class="col s12">
 		<div class="col s12">
