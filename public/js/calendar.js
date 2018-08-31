@@ -30,7 +30,7 @@ $(function () {
         eventLimit: true,
         eventLimitText: "m�s",
         selectable: true,
-
+        locale: 'es',
         dayClick: function (date, jsEvent, view) {
             var prueba = prompt('Introduza el evento');
             if(prueba != '' && prueba != null)
