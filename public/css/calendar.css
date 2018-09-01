@@ -331,16 +331,30 @@ body, html {
   }
 }
 
+.inlined
+{
+  display: inline-block;
+}
+
+#contenedor_superior
+{
+  width:100%;
+}
+
 #userlogged
 {
-  font-size:1vw;
-  display: inline-block;
-  left: 0;
+  float:left;
+  width:auto;
 }
 
 #button_logout
 {
-  display: inline-block;
-  position: absolute;
-  right: 0;
+  float:right;
+  width:auto;
+}
+
+#back_home
+{
+  margin:0 auto;
+  width:auto;
 }
