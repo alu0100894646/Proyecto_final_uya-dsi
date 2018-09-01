@@ -332,6 +332,7 @@ body, html {
 }
 
 .inlined
+<<<<<<< HEAD
 {
     display: inline-block;
 }
@@ -345,12 +346,37 @@ body, html {
 {
   float:left;
   width:100px;
+=======
+{
+  display: inline-block;
+}
+
+#contenedor_superior
+{
+  width:100%;
+}
+
+#userlogged
+{
+  float:left;
+  width:auto;
+>>>>>>> eee76bde23869229196678aa1a27b90c8e2dbc24
 }
 
 #button_logout
 {
   float:right;
+<<<<<<< HEAD
   width:150px;
+=======
+  width:auto;
+}
+
+#back_home
+{
+  margin:0 auto;
+  width:auto;
+>>>>>>> eee76bde23869229196678aa1a27b90c8e2dbc24
 }
 
 #back_home
