@@ -122,6 +122,7 @@ io.on('connection', function (socket) {
         var pass_usuario_l = data.pass_u;
         var db = admin.database();
         var ref = db.ref("server/users");
+        var usuario_no_encontrado = false;
 
         // Attach an asynchronous callback to read the data at our posts reference
         ref.orderByChild("Correo_electronico").on("child_added", function (snapshot) {
@@ -131,15 +132,22 @@ io.on('connection', function (socket) {
             console.log(correo_electronico);
             console.log(contraseña);
 
-            if (correo_electronico === email_usuario_l)
+            if (correo_electronico === email_usuario_l) {
                 if (contraseña === pass_usuario_l) {
 
                     TokenPersonalizado(email_usuario_l, socket);
 
                 }
+            }
+            else {
+                usuario_no_encontrado = true;
+            }
+
         }, function (errorObject) {
             console.log("The read failed: " + errorObject.code);
         });
+        if (usuario_no_encontrado)
+            socket.emit('errorLogin');
     });
 
     socket.on('save_event', function (data) {

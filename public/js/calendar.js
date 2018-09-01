@@ -99,8 +99,10 @@ function cargar_eventos(){
 
 function log_out(){
   firebase.auth().signOut().then(function() {
-      alert('Te has desonectado correctamente');
-      window.location.replace('logreg.html');
+      //alert('Te has desonectado correctamente');
+      var desc = "desconectado";
+      window.location.replace('logreg.html?des=' + desc );
+     // window.location.replace('logreg.html');
   })
   .catch(function(error) {
       alert('Something went wrong');

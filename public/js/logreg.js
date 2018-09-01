@@ -1,4 +1,19 @@
+$(function () {
 
+
+    var decoded = decodeURIComponent(window.location.search)
+    decoded = decoded.substring(1);
+    var queries = decoded.split("&");
+    queries[0] = queries[0].substring(4);
+
+    var desc = queries[0];
+    console.log(desc);
+    if (desc === "desconectado") {
+        var mensaje = "Te has desconectado correctamente";
+        document.getElementById("prueba").innerHTML = mensaje;
+
+    }
+})
 var new_token;
 var socket = io();
 
@@ -17,16 +32,19 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 function log_in() {
 
+
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
 
     if (email === "") {
-        alert("Error al escribir el email");
+        $("#email").addClass("invalid");
+        $("#email").prop("aria-invalid", "true");
         return false;
     }
 
     else if (pass === "") {
-        alert("Error al escribir la contraseña");
+        $("#password").addClass("invalid");
+        $("#password").prop("aria-invalid", "true");
         return false;
     }
 
@@ -47,6 +65,12 @@ function log_in() {
 
         });
     });
+    socket.on('errorLogin', function () {
+
+        var mensaje = "El email o contraseña no son correctos";
+        document.getElementById("prueba").innerHTML = mensaje;
+        return mensaje;
+    });
 }
 
 function validar_formulario() {
@@ -55,20 +79,51 @@ function validar_formulario() {
     var apellidos = document.getElementById("last_name").value;
     var v_email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var email = document.getElementById("email_reg").value;
+    var email_c = document.getElementById("email-confirm").value;
     var pass = document.getElementById("password_reg").value;
+    var pass_c = document.getElementById("password-confirm").value;
 
     if (nombre === "") {
-        alert("Error al escribir el nombre");
+       
+        $("#first_name").addClass("invalid");
+        $("#first_name").prop("aria-invalid", "true");
         return false;
     }
 
     else if (apellidos === "") {
-        alert("Error al escribir los apellidos");
+        $("#last_name").addClass("invalid");
+        $("#last_name").prop("aria-invalid", "true");
+        return false;
+    }
+
+    else if (email === "") {
+        $("#email_reg").addClass("invalid");
+        $("#email_reg").prop("aria-invalid", "true");
+        return false;
+    }
+    else if (email != email_c) {
+        $("#email-confirm").addClass("invalid");
+        $("#email-confirm").prop("aria-invalid", "true");
+
         return false;
     }
 
     else if (!v_email.test(email)) {
-        alert("La dirección de e_mail " + email + " no es válida");
+        //alert("La dirección de e_mail " + email + " no es válida");
+        return false
+    }
+
+    else if (pass === "") {
+        $("#password_reg").addClass("invalid");
+        $("#password_reg").prop("aria-invalid", "true");
+        return false;
+
+    }
+    else if (pass != pass_c) {
+
+        $("#password-confirm").addClass("invalid");
+        $("#password-confirm").prop("aria-invalid", "true");
+        return false;
     }
 
     var info_cliente = {
