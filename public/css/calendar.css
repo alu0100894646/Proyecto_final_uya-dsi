@@ -332,7 +332,7 @@ body, html {
 }
 
 .inlined
-<<<<<<< HEAD
+
 {
     display: inline-block;
 }
@@ -342,11 +342,10 @@ body, html {
   width:100%;
 }
 
-#userlogged
-{
-  float:left;
-  width:100px;
-=======
+#userlogged {
+    float: left;
+    width: 100px;
+}
 {
   display: inline-block;
 }
@@ -359,24 +358,17 @@ body, html {
 #userlogged
 {
   float:left;
-  width:auto;
->>>>>>> eee76bde23869229196678aa1a27b90c8e2dbc24
+  width:100px;
+
 }
 
 #button_logout
 {
   float:right;
-<<<<<<< HEAD
-  width:150px;
-=======
-  width:auto;
-}
 
-#back_home
-{
-  margin:0 auto;
-  width:auto;
->>>>>>> eee76bde23869229196678aa1a27b90c8e2dbc24
+  width:150px;
+
+ 
 }
 
 #back_home
